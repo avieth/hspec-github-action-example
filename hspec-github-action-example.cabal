@@ -1,0 +1,35 @@
+cabal-version:       2.4
+name:                hspec-github-action-example
+version:             0.1.0.0
+-- synopsis:
+-- description:
+-- bug-reports:
+license:             MIT
+license-file:        LICENSE
+author:              Alexander Vieth
+maintainer:          aovieth@gmail.com
+-- copyright:
+-- category:
+extra-source-files:  CHANGELOG.md
+
+library
+  exposed-modules:     Library
+  build-depends:       base
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+test-suite test
+  type:                exitcode-stdio-1.0
+  main-is:             Main.hs
+  build-depends:       base,
+                       hspec-github-action-example,
+                       hspec-core,
+                       hspec-expectations
+  hs-source-dirs:      test
+  default-language:    Haskell2010
+
+executable exe
+  main-is:             Main.hs
+  build-depends:       base
+  hs-source-dirs:      exe
+  default-language:    Haskell2010
