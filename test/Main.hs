@@ -18,3 +18,5 @@ main = hspecWith defaultConfig $ do
     it "does not equal" (Product fortyTwo True `shouldBe` Product fortyTwo False)
   describe "sums" $ do
     it "does not equal" (VariantA fortyTwo `shouldBe` VariantB True)
+  describe "addition" $ do
+    it "makes sense" (addTwo fortyTwo `shouldBe` 44)

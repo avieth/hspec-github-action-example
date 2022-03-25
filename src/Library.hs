@@ -1,10 +1,10 @@
 module Library where
 
 fortyTwo :: Int
-fortyTwo = 42
+fortyTwo = 43
 
 addTwo :: Int -> Int
-addTwo = (+) 2
+addTwo = (+) 4
 
 specialNumbers :: [Int]
 specialNumbers = [42, addTwo fortyTwo]
