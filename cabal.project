@@ -1,9 +1,10 @@
 packages:
   ./hspec-github-action-example.cabal
 
+
 source-repository-package
   type: git
   location: https://github.com/avieth/hspec
-  tag: 7177f2786b537cf94d35f9a209b336405af1233b
+  tag: c005f01d6111140bcd86b048bdeeabebba886d18
   subdir: hspec-core
-  --sha256: phBb34GmSuivWw+OTjqNznnrMdxRFwnYc/ZexjNIkU0=
+  --sha256: Qd8ZXHOKV+rvZFcryDXNFesNLzQzjxzOqsry1Bm/8SI=
