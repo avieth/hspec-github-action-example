@@ -12,7 +12,6 @@ jobs:
           cabal build test-exe
           mkdir ./install
           cabal install --installdir=./install
+      - uses: ./hspec-problem-matcher
       - name: Test
-        run: |
-          echo "::add-matcher::hspec-problem-matcher.json"
-          ./install/test-exe -f github-action
+        run: ./install/test-exe -f github-action

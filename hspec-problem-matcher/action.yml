@@ -1,0 +1,5 @@
+name: 'hspec-problem-matcher'
+description: 'Installs a matcher for hspec github-action formatted output'
+runs:
+  using: 'node14'
+  main: 'index.js'

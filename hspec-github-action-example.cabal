@@ -33,7 +33,6 @@ test-suite test
 -- libraries (unless I had access to 3.7.0.0, which exposes a cabal-install
 -- library).
 executable test-exe
-  type:                exitcode-stdio-1.0
   main-is:             Main.hs
   build-depends:       base,
                        hspec-github-action-example,
