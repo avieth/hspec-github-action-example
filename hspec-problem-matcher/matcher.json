@@ -5,11 +5,10 @@
       "seveirty": "error",
       "pattern": [
         {
-          "regexp": "^(.+):(\\d+):(\\d+):([^\\0]*)\\0",
+          "regexp": "^  (.+):(\\d+):(\\d+):$",
           "file": 1,
           "line": 2,
-          "column": 3,
-          "message": 4
+          "column": 3
         }
       ]
     }

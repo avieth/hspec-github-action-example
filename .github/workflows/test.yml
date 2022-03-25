@@ -14,4 +14,4 @@ jobs:
           cabal install --installdir=./install
       - uses: ./hspec-problem-matcher
       - name: Test
-        run: ./install/test-exe -f github-action
+        run: ./install/test-exe -f failed-examples
