@@ -28,8 +28,17 @@ test-suite test
   hs-source-dirs:      test
   default-language:    Haskell2010
 
-executable exe
+-- An executable of the test suite, because right now I can't figure out how
+-- to programatically locate the test executable via cabal and/or its
+-- libraries (unless I had access to 3.7.0.0, which exposes a cabal-install
+-- library).
+executable test-exe
+  type:                exitcode-stdio-1.0
   main-is:             Main.hs
-  build-depends:       base
-  hs-source-dirs:      exe
+  build-depends:       base,
+                       hspec-github-action-example,
+                       hspec-core,
+                       hspec-expectations
+  hs-source-dirs:      test
   default-language:    Haskell2010
+

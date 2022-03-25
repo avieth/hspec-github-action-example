@@ -1,0 +1,17 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "hspec",
+      "seveirty": "error",
+      "pattern": [
+        {
+          "regexp": "^(.+):(\\d+):(\\d+):(.+)\\0",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        }
+      ]
+    }
+  ]
+}
