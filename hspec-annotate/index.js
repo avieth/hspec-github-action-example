@@ -21,9 +21,13 @@ const isUndefined = (x) =>
 
 const messageFor = function (failureReason) {
   if (failureReason.type == "none") {
-    return "";
+    return "no reason given";
   } else if (failureReason.type == "message") {
-    return failureReason.message;
+    if (!failureReason.message) {
+      "no reason given";
+    } else {
+      failureReason.message;
+    }
   } else if (failureReason.type == "expectation") {
     const body = `expected: ${failureReason.expected}
      got: ${failureReason.got}`;
@@ -77,7 +81,7 @@ ${failureReason.error}`;
           });
         });
         if (failures.length > 0) {
-          throw new Error(`${failures.length} test(s) failed`);
+          core.setFailed(`${failures.length} test(s) failed`);
         }
       }
     });
