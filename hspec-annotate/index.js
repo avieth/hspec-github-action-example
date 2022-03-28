@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 /* To run locally, use this instead.
 const core = {
-  getInputs: function (path) { return null; },
+  getInput: function (path) { return null; },
   setFailed: function (error) { console.error(error); },
   error: function (message, meta) {
     console.error(meta);
@@ -46,7 +46,7 @@ ${failureReason.error}`;
 (async () => {
   try {
 
-    const file = core.getInputs('file') || DEFAULT_FILE;
+    const file = core.getInput('file') || DEFAULT_FILE;
     const exists = await isFile(file);
     if (!exists) {
       throw new Error(`test output file ${file} does not exist`);
@@ -59,17 +59,22 @@ ${failureReason.error}`;
         /* Expected to be a JSON array */
         const failures = JSON.parse(data);
         failures.forEach(failure => {
+          let file = undefined;
+          let startLine = undefined;
+          let startColumn = undefined;
           if (!(failure.location == null)) {
-            if (failure.reason == undefined) {console.info (failure); }
-            core.error(messageFor(failure.reason), {
-              file: failure.location.file,
-              startLine: failure.location.line,
-              startColumn: failure.location.column,
+            file = failure.location.file;
+            startLine = failure.location.line;
+            startColumn = failure.location.column;
+          }
+          core.error(messageFor(failure.reason), {
+              file: file,
+              startLine: startLine,
+              startColumn: startColumn,
               endLine: undefined,
               endColumn: undefined,
               title: failure.path
-            });
-          }
+          });
         });
         if (failures.length > 0) {
           throw new Error(`${failures.length} test(s) failed`);
