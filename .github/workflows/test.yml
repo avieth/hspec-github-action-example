@@ -1,6 +1,11 @@
 name: test
-on: [push, pull_request]
+on: [push]
 jobs:
+  run-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: tfausak/hlint-action@v1
   run-test-suite:
     runs-on: ubuntu-latest
     steps:

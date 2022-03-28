@@ -6,6 +6,9 @@ fortyTwo = 42
 addTwo :: Int -> Int
 addTwo = (+) 2
 
+specialNumbers :: [Int]
+specialNumbers = [42, addTwo fortyTwo]
+
 programHalts :: (a -> b) -> Bool
 programHalts = error "still can't figure out how to do this one"
 
