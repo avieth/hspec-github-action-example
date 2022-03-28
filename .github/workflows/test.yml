@@ -14,8 +14,4 @@ jobs:
       - name: Build
         run: |
           cabal update
-          cabal v2-run test -- --json-failure-report=./hspec-failure-report.json
-        continue-on-error: true
-      - uses: ./hspec-annotate
-        with:
-          file: ./hspec-failure-report.json
+          cabal v2-run test -- -f github
