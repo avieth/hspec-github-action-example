@@ -14,9 +14,8 @@ jobs:
       - name: Build
         run: |
           cabal update
-          cabal build test-exe
-          mkdir ./install
-          cabal install --installdir=./install
-      - uses: ./hspec-problem-matcher
-      - name: Test
-        run: ./install/test-exe -f failed-examples
+          cabal v2-run test -- --json-failure-report=./hspec-failure-report.json
+        continue-on-error: true
+      - uses: ./hspec-annotate
+        with:
+          file: ./hspec-failure-report.json

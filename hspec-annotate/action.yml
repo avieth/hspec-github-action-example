@@ -1,0 +1,9 @@
+name: 'hspec-annotate'
+description: 'Analyzes JSON hspec failure output and generates annotations'
+inputs:
+  file:
+    description: The hspec JSON failure report
+    required: false
+runs:
+  using: 'node16'
+  main: 'index.js'

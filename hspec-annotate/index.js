@@ -1,0 +1,83 @@
+const core = require('@actions/core');
+/* To run locally, use this instead.
+const core = {
+  getInputs: function (path) { return null; },
+  setFailed: function (error) { console.error(error); },
+  error: function (message, meta) {
+    console.error(meta);
+    console.error(message);
+  }
+};
+*/
+const fs = require('fs');
+
+const DEFAULT_FILE = 'hspec-failure-report.json';
+
+const isFile = (path) =>
+  new Promise((resolve) => fs.stat(path, (error, stats) => resolve(!error && stats.isFile())));
+
+const isUndefined = (x) =>
+  typeof x === 'undefined';
+
+const messageFor = function (failureReason) {
+  if (failureReason.type == "none") {
+    return "";
+  } else if (failureReason.type == "message") {
+    return failureReason.message;
+  } else if (failureReason.type == "expectation") {
+    const body = `expected: ${failureReason.expected}
+     got: ${failureReason.got}`;
+    if (failureReason.message) {
+      return `${failureReason.message}
+${body}`;
+    } else {
+      return body;
+    }
+  } else if (failureReason.type == "error") {
+    if (failureReason.message) {
+      return `${failureReason.message}
+${failureReason.error}`;
+    } else {
+      return `${failureReason.error}`;
+    }
+  }
+};
+
+(async () => {
+  try {
+
+    const file = core.getInputs('file') || DEFAULT_FILE;
+    const exists = await isFile(file);
+    if (!exists) {
+      throw new Error(`test output file ${file} does not exist`);
+    }
+
+    fs.readFile(file, 'utf8', (err, data) => {
+      if (err) {
+        throw new Error(`failed to read ${file}: ${err}`);
+      } else {
+        /* Expected to be a JSON array */
+        const failures = JSON.parse(data);
+        failures.forEach(failure => {
+          if (!(failure.location == null)) {
+            if (failure.reason == undefined) {console.info (failure); }
+            core.error(messageFor(failure.reason), {
+              file: failure.location.file,
+              startLine: failure.location.line,
+              startColumn: failure.location.column,
+              endLine: undefined,
+              endColumn: undefined,
+              title: failure.path
+            });
+          }
+        });
+        if (failures.length > 0) {
+          throw new Error(`${failures.length} test(s) failed`);
+        }
+      }
+    });
+
+  } catch (error) {
+    core.setFailed(error);
+  }
+})();
