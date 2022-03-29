@@ -1,17 +1,25 @@
 name: test
 on: [push]
 jobs:
-  run-linter:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: tfausak/hlint-action@v1
-  run-test-suite:
+  build-lint-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: haskell/actions/setup@v1
-      - name: Build
+      - name: build
         run: |
           cabal update
-          cabal v2-run test -- -f github
+          cabal v2-build all
+      - name: get-hlint
+        uses: rwe/actions-hlint-setup@v1
+      - name: lint
+        run: hlint --json --no-exit-code ./src ./test > hlint-report.json
+      - name: lint-annotate
+        uses: ./hlint-annotate/
+        continue-on-error: true
+      - name: test
+        run: cabal v2-run test -- -f github
+        continue-on-error: true
+      - name: Check status
+        if: steps.test.outcome != 'success' || steps.lint-annotate.outcome != 'success'
+        run: exit 1
