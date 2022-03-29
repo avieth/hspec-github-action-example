@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@actions/core": "^1.6.0"
+  },
+  "private": true,
+  "name": "hlint-annotate",
+  "version": "1.0.0",
+  "description": "github action to annotate based on an hlint json output",
+  "main": "index.js"
+}
