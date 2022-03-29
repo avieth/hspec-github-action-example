@@ -1,0 +1,9 @@
+name: 'hlint-annotate'
+description: 'Analyzes JSON hlint suggestions and makes annotations'
+inputs:
+  file:
+    description: The hlint JSON output
+    required: false
+runs:
+  using: 'node16'
+  main: 'index.js'

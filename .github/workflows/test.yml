@@ -1,17 +1,37 @@
 name: test
 on: [push]
 jobs:
-  run-linter:
+
+  setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: tfausak/hlint-action@v1
-  run-test-suite:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
       - uses: haskell/actions/setup@v1
-      - name: Build
+        with:
+          ghc-version: '8.10.7'
+      - uses: rwe/actions-hlint-setup@v1
+      - uses: actions/checkout@v2
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - name: build
         run: |
           cabal update
-          cabal v2-run test -- -f github
+          cabal v2-build all
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - name: lint
+        run: hlint --json --no-exit-code ./src ./test > hlint-report.json
+      - name: lint-annotate
+        uses: ./hlint-annotate/
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: test
+        run: ${{ steps.build.outputs.cabal-exe }} v2-run test -- -f github

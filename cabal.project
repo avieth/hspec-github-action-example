@@ -4,6 +4,6 @@ packages:
 source-repository-package
   type: git
   location: https://github.com/avieth/hspec.git
-  tag: b88073d118e2603d703d85421f80bdf4080e4b76
+  tag: 76c30d4d6562830d292ec159bb40ea022e591aef
   subdir: hspec-core
-  --sha256: dDOP+2J5ZdN+EPPaIcHh6FddbzOJRrZ9rn7CJZKmY/I=
+  --sha256: Z7/lgvOruaF4YeqrHhZcL9PP9FZVtEsn3UnUAECVPb0=
